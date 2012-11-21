@@ -53,7 +53,7 @@ public class XMLMediator {
 	 */
 	public static String getTasks() {
 		List<Task> tasks = DBManager.INSTANCE.getTaskDAO().getTasks();
-		
+		LOGGER.log(Level.INFO, "XML no Tasks are: " + tasks.size());
 		Task task;
 
 		Iterator <Task> tIterator = tasks.iterator();
@@ -115,7 +115,7 @@ public class XMLMediator {
 
 			// TODO compléter la création de l'objet Task
 			// pour la date, utiliser le code ci-dessous
-			task.setId(0);
+			task.setId(-1);
 			task.setTitle(taskElt.getAttribute("title"));
 			task.setDescription(myGetElt(taskElt,"description"));
 			task.setAsker(myGetElt(taskElt,"asker"));
