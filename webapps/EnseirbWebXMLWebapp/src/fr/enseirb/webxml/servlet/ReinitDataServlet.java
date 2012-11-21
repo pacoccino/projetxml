@@ -44,10 +44,10 @@ public class ReinitDataServlet extends HttpServlet {
 		boolean success = XMLMediator.importXMLTasks(postData);
 		String message;
 		if (!success) {
-			message = "La base de données n'a pas été réinitialisée";
+			message = "La base de donnÃ©es n'a pas Ã©tÃ© rÃ©initialisÃ©e";
 
 		} else {
-			message = "La base de données a été réinitialisée";
+			message = "La base de donnÃ©es a Ã©tÃ© rÃ©initialisÃ©e";
 
 		}
 

@@ -60,4 +60,44 @@
 		<url-pattern>/about/teacher</url-pattern>
 		<url-pattern>/about/teacher/post</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ListUsersServlet</display-name>
+		<servlet-name>ListUsersServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.ListUsersServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListUsersServlet</servlet-name>
+		<url-pattern>/user/list/xml</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ListTasksServlet</display-name>
+		<servlet-name>ListTasksServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.ListTasksServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListTasksServlet</servlet-name>
+		<url-pattern>/task/list/xml</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>CreateUserServlet</display-name>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.CreateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<url-pattern>/user/create/url</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>CRUDTaskServlet</display-name>
+		<servlet-name>CRUDTaskServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.CRUDTaskServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CRUDTaskServlet</servlet-name>
+		<url-pattern>/task/create/url</url-pattern>
+	</servlet-mapping>
 </web-app>

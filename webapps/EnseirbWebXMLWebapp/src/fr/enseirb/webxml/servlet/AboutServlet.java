@@ -21,7 +21,7 @@ public class AboutServlet extends HttpServlet {
 	private String studentClass = new String("I2");
 	private String studentFirstName = new String("Pacien");
 	private String studentLastName = new String("Boisson");
-	private String teacherName = new String("a");
+	private String teacherName = new String("LOL");
 
 	/**
 	 * @see HttpServlet#HttpServlet()

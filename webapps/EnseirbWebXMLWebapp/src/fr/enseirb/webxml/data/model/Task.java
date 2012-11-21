@@ -16,10 +16,10 @@ public class Task implements Serializable {
 	private String owner = "";// nom de la personne devant faire l'action
 	private String title = "";
 	private String description = "";
-	private Date creationDate = new Date(); // date à laquelle l'action a été créée
-	private Date deadline = new Date(); // date à laquelle l'action doit être faite
+	private Date creationDate = new Date(); // date Ã  laquelle l'action a Ã©tÃ© crÃ©Ã©e
+	private Date deadline = new Date(); // date Ã  laquelle l'action doit Ãªtre faite
 	private int priority = 0; // importance de l'action
-	private boolean done = false; // indique si la tâche est terminée ou non
+	private boolean done = false; // indique si la tÃ¢che est terminÃ©e ou non
 
 	public Task() {
 	}
