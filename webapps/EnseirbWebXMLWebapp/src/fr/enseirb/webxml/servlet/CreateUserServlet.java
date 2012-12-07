@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Properties;
+import java.util.Map;
+import java.util.HashMap;
 
 import fr.enseirb.webxml.util.ServletToolkit;
+import fr.enseirb.webxml.util.XMLToolkit;
 import fr.enseirb.webxml.data.xml.XMLMediator;
 import fr.enseirb.webxml.data.model.User;
 
@@ -32,21 +35,30 @@ public class CreateUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sResponse;
 		
-		Properties props = ServletToolkit.parseURLParams(request);
-		String userXML;
-		if(props.containsKey("name"))
+		if(request.getRequestURI().contains("user/create/url"))
 		{
-			userXML ="<user name=\""+ props.getProperty("name") +"\"/>";
-			if(XMLMediator.addUser(userXML))
-				sResponse = "Utilisateur "+props.getProperty("name")+" créé.";
-			else
-				sResponse = "Erreur lors de la creation de l'utilisateur";
+			Properties props = ServletToolkit.parseURLParams(request);
+			String userXML;
+			if(props.containsKey("name"))
+			{
+				userXML ="<user name=\""+ props.getProperty("name") +"\"/>";
+				if(XMLMediator.addUser(userXML))
+					sResponse = "Utilisateur "+props.getProperty("name")+" créé.";
+				else
+					sResponse = "Erreur lors de la creation de l'utilisateur";
+			}
+			else	
+			{
+				sResponse = "Aucun argument";
+			}
 		}
-		else	
+		else
 		{
-			sResponse = "Aucun argument";
+			Map<String, String> xslParams = new HashMap<String, String>();
+			xslParams.put("pageTitle", "Ajout utilisateur");
+			xslParams.put("htmlTitle", "Utilisateur à ajouter");
+			sResponse=XMLToolkit.transformXML("<noXML/>", "/resources/xsl/common/create_user.xsl", xslParams);
 		}
-		
 		ServletToolkit.writeResponse(response, sResponse);
 	}
 

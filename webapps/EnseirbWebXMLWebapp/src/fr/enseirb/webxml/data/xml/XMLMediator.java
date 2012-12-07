@@ -25,6 +25,7 @@ public class XMLMediator {
 	private static final Logger LOGGER = Logger.getLogger(XMLMediator.class.getName());
 
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	public static final SimpleDateFormat DATE_FORMAT_INV = new SimpleDateFormat("yyyyMMdd");
 
 	public static final String createEmptyTaskXML() {
 		StringBuilder buffer = new StringBuilder(XMLToolkit.XML_HEADER);
@@ -62,7 +63,7 @@ public class XMLMediator {
 		{
 			task = tIterator.next();
 			
-			tasksXML=tasksXML + "<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ task.getDeadline() + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
+			tasksXML=tasksXML + "<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ DATE_FORMAT.format(task.getDeadline()) + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
 			tasksXML=tasksXML + "<description>"+task.getDescription()+" </description>";
 			tasksXML=tasksXML + "<asker>"+task.getAsker()+"</asker> ";
 			tasksXML=tasksXML + "<owner>"+task.getOwner()+"</owner> ";
@@ -71,7 +72,11 @@ public class XMLMediator {
 			tasksXML=tasksXML + "</task>";
 		}
 		tasksXML=tasksXML + "</tasks>";
-		LOGGER.log(Level.INFO, "XML Tasks are: " + tasksXML);
+		
+		if(!(XMLToolkit.isXMLValid(tasksXML, "resources/xsd/tasks.xsd")))
+			LOGGER.log(Level.INFO, "Erreur dans la validation");
+		else
+			LOGGER.log(Level.INFO, "XML Tasks are: " + tasksXML);
 		return tasksXML;
 	}
 
@@ -79,12 +84,16 @@ public class XMLMediator {
 		Task task = DBManager.INSTANCE.getTaskDAO().getTask(id);
 		
 		String taskXML;
-		taskXML="<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ task.getDeadline() + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
-		taskXML=taskXML + "<description>"+task.getDescription()+" </description>";
-		taskXML=taskXML + "<asker>"+task.getAsker()+"</asker> ";
-		taskXML=taskXML + "<owner>"+task.getOwner()+"</owner> ";
-		taskXML=taskXML + "</task>";
-		
+		if(task==null)
+			taskXML = "<task />";
+		else
+		{
+			taskXML="<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ task.getDeadline() + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
+			taskXML=taskXML + "<description>"+task.getDescription()+" </description>";
+			taskXML=taskXML + "<asker>"+task.getAsker()+"</asker> ";
+			taskXML=taskXML + "<owner>"+task.getOwner()+"</owner> ";
+			taskXML=taskXML + "</task>";
+		}
 		LOGGER.log(Level.INFO, "XML Task with id " + id + " is: " + taskXML);
 		return taskXML;
 	}
@@ -94,8 +103,13 @@ public class XMLMediator {
 	 * <asker>aaa</asker> <owner>ooo</owner> </task>
 	 */
 	public static boolean addOrModifyTask(String taskXML) {
+		if(!(XMLToolkit.isXMLValid(taskXML, "resources/xsd/task.xsd")))
+		{
+			LOGGER.log(Level.INFO, "Erreur dans la validation");
+			return false;			
+		}
 		LOGGER.log(Level.INFO, "Adding or modifying Task stream: " + taskXML);
-
+				
 		Document doc = XMLToolkit.parseDocument(taskXML);
 		Element taskElt = doc.getDocumentElement();
 
@@ -115,7 +129,10 @@ public class XMLMediator {
 
 			// TODO compléter la création de l'objet Task
 			// pour la date, utiliser le code ci-dessous
-			task.setId(-1);
+			String id = taskElt.getAttribute("id");
+			if (id != null && !id.isEmpty()) {
+				task.setId(Integer.parseInt(id));
+			}
 			task.setTitle(taskElt.getAttribute("title"));
 			task.setDescription(myGetElt(taskElt,"description"));
 			task.setAsker(myGetElt(taskElt,"asker"));
@@ -127,7 +144,7 @@ public class XMLMediator {
 	
 			success = DBManager.INSTANCE.getTaskDAO().addOrModify(task);
 			if (success) {
-				LOGGER.log(Level.INFO, "Tache ajoutee");
+				LOGGER.log(Level.INFO, "Task added");
 				// on rajoute les utilisateurs au passage
 				DBManager.INSTANCE.getUserDAO().addUser(new User(task.getAsker()));
 				DBManager.INSTANCE.getUserDAO().addUser(new User(task.getOwner()));
@@ -151,7 +168,11 @@ public class XMLMediator {
 		while (uIterator.hasNext())
 			usersXML=usersXML + "<user name=\"" + uIterator.next().getName()+"\"/> ";
 		usersXML=usersXML + "</users>";
-		LOGGER.log(Level.INFO, "XML Users are: " + usersXML);
+		
+		if(!(XMLToolkit.isXMLValid(usersXML, "resources/xsd/users.xsd")))
+			LOGGER.log(Level.INFO, "Erreur dans la validation");
+		else
+			LOGGER.log(Level.INFO, "XML Users are: " + usersXML);
 		return usersXML;
 	}
 
@@ -159,6 +180,12 @@ public class XMLMediator {
 	 * <user name="xxx"/>
 	 */
 	public static boolean addUser(String userXML) {
+		if(!(XMLToolkit.isXMLValid(userXML, "resources/xsd/user.xsd")))
+		{
+			LOGGER.log(Level.INFO, "Erreur dans la validation");
+			return false;			
+		}
+		
 		LOGGER.log(Level.INFO, "Adding User stream: " + userXML);
 
 		Document doc = XMLToolkit.parseDocument(userXML);
@@ -187,11 +214,62 @@ public class XMLMediator {
 		String year = now.substring(6, 10);
 
 		String nowDate = year + month + day;
+		String myNow = DATE_FORMAT_INV.format(new Date());
 		String xPathDate = "concat(substring(@deadline,7,4), substring(@deadline,4,2), substring(@deadline,1,2))";
 
 		// TODO : créer un flux XML pour les stats
 		
-		String statsXML = "";
+		List <String> userList = XMLToolkit.getXPathValues(users, "/users/user/@name");
+
+		List <String> taskList;
+		List <String> doneList;
+		List <String> todoList;
+		List <String> lateList;
+		List <String> intimeList;
+		
+		int showNull = -1;  // -1 affiche les nulls, 0 ne les affiche pas
+		
+		String statsXML = "<stats>";
+				
+		for(String name : userList)
+		{
+			statsXML += "<user name=\""+name+"\">";
+			
+			//String task = XMLToolkit.getXPathValue(tasks, "/tasks/task[owner='"+name+"']/@id");
+			taskList = XMLToolkit.getXPathValues(tasks, "/tasks/task[owner='"+name+"']");
+				statsXML += "<tasks number=\"" +taskList.size()+ "\">";
+				doneList = XMLToolkit.getXPathValues(tasks, "/tasks/task[@done='true' and owner='"+name+"']/@title");
+					statsXML += "<done number=\"" +doneList.size()+ "\">";
+					for(String taskTitle : doneList)
+						statsXML += "<task title=\"" +taskTitle+ "\"/>";
+					statsXML += "</done>";
+				todoList = XMLToolkit.getXPathValues(tasks, "/tasks/task[@done='false' and owner='"+name+"']/@title");
+					statsXML += "<todo number=\"" +todoList.size()+ "\">";
+					
+					lateList = XMLToolkit.getXPathValues(tasks, "/tasks/task[@done='false' and owner='"+name+"' and "+xPathDate+"<"+nowDate+"]/@title");
+						statsXML += "<late number=\"" +lateList.size()+ "\">";
+						for(String taskTitle : lateList)
+							statsXML += "<task title=\"" +taskTitle+ "\"/>";
+						statsXML += "</late>";
+	
+					intimeList = XMLToolkit.getXPathValues(tasks, "/tasks/task[@done='false' and owner='"+name+"' and "+xPathDate+">"+nowDate+"]/@title");
+						statsXML += "<intime number=\"" +intimeList.size()+ "\">";
+						for(String taskTitle : intimeList)
+							statsXML += "<task title=\"" +taskTitle+ "\"/>";
+						statsXML += "</intime>";
+	
+						
+					statsXML += "</todo>";
+				
+				statsXML += "</tasks>";
+			
+	
+			//statsXML += XMLToolkit.getXPathValue(s, "/@name");
+			statsXML += "</user>";
+		}
+		
+		
+		statsXML += "</stats>";
 		LOGGER.log(Level.INFO, "Stats built: " + statsXML);
 		return statsXML;
 	}

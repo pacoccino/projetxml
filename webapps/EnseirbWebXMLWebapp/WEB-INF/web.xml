@@ -68,6 +68,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ListUsersServlet</servlet-name>
+		<url-pattern>/user/list</url-pattern>
 		<url-pattern>/user/list/xml</url-pattern>
 	</servlet-mapping>
 	<servlet>
@@ -88,6 +89,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateUserServlet</servlet-name>
+		<url-pattern>/user/create</url-pattern>
 		<url-pattern>/user/create/url</url-pattern>
 	</servlet-mapping>
 	<servlet>
@@ -98,6 +100,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CRUDTaskServlet</servlet-name>
+		<url-pattern>/task/create</url-pattern>
 		<url-pattern>/task/create/url</url-pattern>
+		<url-pattern>/task/modify</url-pattern>
+		<url-pattern>/task/view</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>StatsServlet</display-name>
+		<servlet-name>StatsServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.StatsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StatsServlet</servlet-name>
+		<url-pattern>/stats/xml</url-pattern>
 	</servlet-mapping>
 </web-app>
