@@ -58,15 +58,15 @@ public class XMLMediator {
 		Task task;
 
 		Iterator <Task> tIterator = tasks.iterator();
-		String tasksXML = "<tasks> ";
+		String tasksXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><tasks>";
 		while (tIterator.hasNext())
 		{
 			task = tIterator.next();
 			
-			tasksXML=tasksXML + "<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ DATE_FORMAT.format(task.getDeadline()) + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
-			tasksXML=tasksXML + "<description>"+task.getDescription()+" </description>";
-			tasksXML=tasksXML + "<asker>"+task.getAsker()+"</asker> ";
-			tasksXML=tasksXML + "<owner>"+task.getOwner()+"</owner> ";
+			tasksXML=tasksXML + "<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" creationDate=\""+ DATE_FORMAT.format(task.getCreationDate()) + "\" deadline=\""+ DATE_FORMAT.format(task.getDeadline()) + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
+			tasksXML=tasksXML + "<description>"+task.getDescription()+"</description>";
+			tasksXML=tasksXML + "<asker>"+task.getAsker()+"</asker>";
+			tasksXML=tasksXML + "<owner>"+task.getOwner()+"</owner>";
 			
 			
 			tasksXML=tasksXML + "</task>";
@@ -88,8 +88,8 @@ public class XMLMediator {
 			taskXML = "<task />";
 		else
 		{
-			taskXML="<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" deadline=\""+ task.getDeadline() + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
-			taskXML=taskXML + "<description>"+task.getDescription()+" </description>";
+			taskXML="<task id=\"" + task.getId() + "\" title=\""+ task.getTitle() + "\" creationDate=\""+ DATE_FORMAT.format(task.getCreationDate()) +  "\" deadline=\""+ DATE_FORMAT.format(task.getDeadline()) + "\" priority=\""+ task.getPriority() + "\" done=\"" + task.isDone() + "\">";
+			taskXML=taskXML + "<description>"+task.getDescription()+"</description>";
 			taskXML=taskXML + "<asker>"+task.getAsker()+"</asker> ";
 			taskXML=taskXML + "<owner>"+task.getOwner()+"</owner> ";
 			taskXML=taskXML + "</task>";

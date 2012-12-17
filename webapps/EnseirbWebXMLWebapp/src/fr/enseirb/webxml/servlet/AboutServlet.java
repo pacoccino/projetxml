@@ -16,12 +16,12 @@ import fr.enseirb.webxml.util.ServletToolkit;
 public class AboutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private int studentsNumber = 30;
+	private int studentsNumber = 1;
 	private int studentGroup = 2;
 	private String studentClass = new String("I2");
 	private String studentFirstName = new String("Pacien");
 	private String studentLastName = new String("Boisson");
-	private String teacherName = new String("LOL");
+	private String teacherName = new String("undefined");
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -62,7 +62,7 @@ public class AboutServlet extends HttpServlet {
 			else if("group".equals(action))
 				sResponse = Integer.toString(studentGroup);
 			else if("full".equals(action) || props.size() == 0)
-				sResponse = "Classe : "+studentClass + " Groupe : " + Integer.toString(studentGroup) + " Prenom : "+ studentFirstName + " Nom : "+ studentLastName;
+				sResponse = studentClass + " / " + Integer.toString(studentGroup) + " / "+ studentFirstName + " "+ studentLastName;
 			else if(props.containsKey("studentId"))
 			{
 				if("firstName".equals(action))
@@ -70,7 +70,6 @@ public class AboutServlet extends HttpServlet {
 				else if ("lastName".equals(action))
 					sResponse = studentLastName;
 			}		
-
 				
 		
 		}
