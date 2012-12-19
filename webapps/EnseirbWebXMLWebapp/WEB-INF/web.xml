@@ -79,6 +79,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ListTasksServlet</servlet-name>
+		<url-pattern>/task/list</url-pattern>
 		<url-pattern>/task/list/xml</url-pattern>
 	</servlet-mapping>
 	<servlet>
@@ -114,5 +115,20 @@
 	<servlet-mapping>
 		<servlet-name>StatsServlet</servlet-name>
 		<url-pattern>/stats/xml</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>OwnershipServlet</display-name>
+		<servlet-name>OwnershipServlet</servlet-name>
+		<servlet-class>fr.enseirb.webxml.servlet.OwnershipServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OwnershipServlet</servlet-name>
+		<url-pattern>/task/user/ownership/post/isValid</url-pattern>
+		<url-pattern>/user/task/ownership/post/isValid</url-pattern>
+		<url-pattern>/task/user/ownership/post</url-pattern>
+		<url-pattern>/user/task/ownership/post</url-pattern>
+		<url-pattern>/user/ownership</url-pattern>
+		<url-pattern>/task/ownership</url-pattern>
 	</servlet-mapping>
 </web-app>
