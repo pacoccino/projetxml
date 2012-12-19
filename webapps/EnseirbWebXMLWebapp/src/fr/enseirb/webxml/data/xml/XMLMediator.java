@@ -58,7 +58,8 @@ public class XMLMediator {
 		Task task;
 
 		Iterator <Task> tIterator = tasks.iterator();
-		String tasksXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><tasks>";
+		String tasksXML = XMLToolkit.XML_HEADER;
+		tasksXML += "<tasks>";
 		while (tIterator.hasNext())
 		{
 			task = tIterator.next();
@@ -237,6 +238,7 @@ public class XMLMediator {
 			
 			//String task = XMLToolkit.getXPathValue(tasks, "/tasks/task[owner='"+name+"']/@id");
 			taskList = XMLToolkit.getXPathValues(tasks, "/tasks/task[owner='"+name+"']");
+
 				statsXML += "<tasks number=\"" +taskList.size()+ "\">";
 				doneList = XMLToolkit.getXPathValues(tasks, "/tasks/task[@done='true' and owner='"+name+"']/@title");
 					statsXML += "<done number=\"" +doneList.size()+ "\">";

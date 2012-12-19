@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task title="nouvelle action via post" deadline="14/01/2013"
+	priority="5" done="true">
+	<description>action post
+	</description>
+	<asker>matLo</asker>
+	<owner>matLo</owner>
+</task>

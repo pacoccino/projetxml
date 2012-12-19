@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Properties;
+import java.util.Map;
+import java.util.HashMap;
 
 import fr.enseirb.webxml.util.ServletToolkit;
 import fr.enseirb.webxml.data.xml.XMLMediator;
+import fr.enseirb.webxml.util.XMLToolkit;
 
 /**
  * Servlet implementation class AboutServlet
@@ -38,16 +41,22 @@ public class ListTasksServlet extends HttpServlet {
 		String sResponse;
 		
 		Properties props = ServletToolkit.parseURLParams(request);
-		if(props.containsKey("id"))
+		if(request.getRequestURI().contains("task/list/xml"))
 		{
-			sResponse = XMLMediator.getTask(Integer.parseInt(props.getProperty("id")));
+			response.setHeader("Content-Type", "application/xml");
+			if(props.containsKey("id"))
+				sResponse = XMLMediator.getTask(Integer.parseInt(props.getProperty("id")));
+			else	
+				sResponse = XMLMediator.getTasks();
 		}
-		else	
+		else
 		{
-			sResponse = XMLMediator.getTasks();
+			Map<String, String> xslParams = new HashMap<String, String>();
+			xslParams.put("pageTitle", "Ajout utilisateur");
+			
+			String fluxXML = XMLMediator.getTasks();
+			sResponse=XMLToolkit.transformXML(fluxXML, "/resources/xsl/common/task_list.xsl", xslParams);
 		}
-		
-		response.setHeader("Content-Type", "application/xml");
 		ServletToolkit.writeResponse(response, sResponse);
 	}
 

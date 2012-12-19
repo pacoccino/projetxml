@@ -1,0 +1,8 @@
+id;title;description;asker;owner;deadline
+0;action 1;christmas;matLo;groupe;24/12/2012
+1;init db;initialisation de la db;matLo;groupe;20/11/2012
+2;plan cours;cours et tds;prof;matLo;14/07/2012
+3;supports cours et tds;support PDF et PPT;prof;matLo;15/10/2012
+4;relecture;cours et tds pour voir;matLo;prof;30/10/2012
+5;tests;notation;subProf;subProf;07/01/2013
+6;SVN;eval 2;matLo;subProf;07/01/2013

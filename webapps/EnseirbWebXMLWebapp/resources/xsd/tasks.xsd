@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="tasks">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="task" minOccurs="0" maxOccurs="unbounded">
-						<xs:complexType>
-						<xs:sequence>
-							<xs:element name="description" type="xs:string" />
-							<xs:element name="asker" type="xs:string" />
-							<xs:element name="owner" type="xs:string" />
-						</xs:sequence>
-							<xs:attribute name="id" type="xs:integer" />
-							<xs:attribute name="title" type="xs:string" />
-							<xs:attribute name="deadline" type="xs:string" />
-							<xs:attribute name="priority" type="xs:integer" />
-							<xs:attribute name="done" type="xs:boolean" />
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-</xs:schema>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+	<xsd:element name="tasks">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="task" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="description" type="xsd:string" />
+							<xsd:element name="asker" type="xsd:string" />
+							<xsd:element name="owner" type="xsd:string" />
+						</xsd:sequence>
+							<xsd:attribute name="id" type="xsd:integer" use="optional"  />
+							<xsd:attribute name="title" type="xsd:string" />
+							<xsd:attribute name="creationDate" type="xsd:string" use="optional" />
+							<xsd:attribute name="deadline" type="xsd:string" />
+							<xsd:attribute name="priority">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:int">
+										<xsd:minInclusive value="1" />
+										<xsd:maxInclusive value="5" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:attribute>
+							<xsd:attribute name="done" type="xsd:boolean" />
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
