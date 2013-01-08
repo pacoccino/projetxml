@@ -54,7 +54,7 @@ public class OwnershipServlet extends HttpServlet {
 			boolean success = XMLToolkit.isXMLValid(ownershipXML, "resources/xsd/ownership.xsd");
 			sResponse = XMLToolkit.createPostResult("coucou", success);
 		}
-		else if(request.getRequestURI().contains("task/user/ownership/post") || request.getRequestURI().contains("task/user/ownership/post"))
+		else if(request.getRequestURI().contains("task/user/ownership/post") || request.getRequestURI().contains("user/task/ownership/post"))
 		{
 			int taskId;
 			String userName;
@@ -94,6 +94,17 @@ public class OwnershipServlet extends HttpServlet {
 			sResponse = StringFormatUtil.sortAndFormat(idList);
 
 			
+		}
+		else if(request.getRequestURI().contains("task/ownership/csv"))
+		{
+			response.setHeader("Content-Type", "text/plain");
+
+			Map<String, String> xslParams = new HashMap<String, String>();
+			xslParams.put("pageTitle", "Ajout utilisateur");
+			
+			String fluxXML = XMLMediator.getTasks();
+			sResponse=XMLToolkit.transformXML(fluxXML, "/resources/xsl/common/ownership.xsl", xslParams);
+
 		}
 		else if(request.getRequestURI().contains("task/ownership"))
 		{
