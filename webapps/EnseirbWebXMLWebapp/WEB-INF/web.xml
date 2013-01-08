@@ -130,5 +130,6 @@
 		<url-pattern>/user/task/ownership/post</url-pattern>
 		<url-pattern>/user/ownership</url-pattern>
 		<url-pattern>/task/ownership</url-pattern>
+		<url-pattern>/task/ownership/csv</url-pattern>
 	</servlet-mapping>
 </web-app>
