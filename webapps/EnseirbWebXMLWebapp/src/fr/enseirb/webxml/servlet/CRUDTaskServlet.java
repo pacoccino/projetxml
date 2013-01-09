@@ -66,6 +66,23 @@ public class CRUDTaskServlet extends HttpServlet {
 				sResponse = "Aucun argument";
 			}
 		}
+		else if(request.getRequestURI().contains("task/view/xml"))
+		{
+			response.setHeader("Content-Type", "text/plain");
+			if(!props.containsKey("id") || !props.containsKey("exportEncoder"))
+				sResponse = new String("Erreur");
+			else
+			{
+				int id = Integer.parseInt(props.getProperty("id"));
+				String expEnc = props.getProperty("exportEncoder");
+				
+				Map<String, String> xslParams = new HashMap<String, String>();
+				xslParams.put("expEncoder", expEnc);
+				
+				String fluxXML = XMLMediator.getTask(id);
+				sResponse=XMLToolkit.transformXML(fluxXML, "/resources/xsl/common/properties.xsl", xslParams);
+			}
+		}
 		else
 		{
 			String fluxXML="<noXML/>";

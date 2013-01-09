@@ -107,6 +107,7 @@
 		<url-pattern>/task/create/url</url-pattern>
 		<url-pattern>/task/modify</url-pattern>
 		<url-pattern>/task/view</url-pattern>
+		<url-pattern>/task/view/xml</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<description></description>
