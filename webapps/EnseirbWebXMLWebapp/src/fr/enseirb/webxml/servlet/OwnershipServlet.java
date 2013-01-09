@@ -52,7 +52,7 @@ public class OwnershipServlet extends HttpServlet {
 			postData = ServletToolkit.getPostData(request);
 			String ownershipXML = postData;
 			boolean success = XMLToolkit.isXMLValid(ownershipXML, "resources/xsd/ownership.xsd");
-			sResponse = XMLToolkit.createPostResult("coucou", success);
+			sResponse = XMLToolkit.createPostResult("Validation Ownership", success);
 		}
 		else if(request.getRequestURI().contains("task/user/ownership/post") || request.getRequestURI().contains("user/task/ownership/post"))
 		{

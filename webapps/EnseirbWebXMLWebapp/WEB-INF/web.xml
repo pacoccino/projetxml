@@ -57,6 +57,8 @@
 	<servlet-mapping>
 		<servlet-name>AboutServlet</servlet-name>
 		<url-pattern>/about</url-pattern>
+		<url-pattern>/about/xml</url-pattern>
+		<url-pattern>/about/xml/isValid</url-pattern>
 		<url-pattern>/about/teacher</url-pattern>
 		<url-pattern>/about/teacher/post</url-pattern>
 	</servlet-mapping>

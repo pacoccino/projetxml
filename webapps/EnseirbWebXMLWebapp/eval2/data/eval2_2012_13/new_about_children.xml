@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<about studentsNumber='2' group='Gx' class='I2' teacher='t'>
+	<student fisrtName='f1' lastName='l1' />
+	<student fisrtName='f2' lastName='l2' />
+</about>

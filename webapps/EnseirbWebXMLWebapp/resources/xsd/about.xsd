@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name="about">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="student" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="fisrtName" 	type="xsd:string"	  use="required" />
+						<xsd:attribute name="lastName" 	type="xsd:string"	  use="required" />
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="studentsNumber" 	type="xsd:int"	  use="required" />
+			<xsd:attribute name="group" 			type="xsd:string" use="required" />
+			<xsd:attribute name="class" 			type="xsd:string" use="required" />
+			<xsd:attribute name="teacher" 			type="xsd:string" use="optional" />
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
